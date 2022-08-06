@@ -3,10 +3,11 @@
 #include "Gui_framework/Elements/Button.h"
 #include "Gui_framework/Elements/Input_text.h"
 #include "Gui_framework/Elements/Parents/Child_window.h"
-#include "Gui_framework/Fullscreen_view.h"
+#include "Gui_framework/Elements/Parents/Window.h"
+#include "Gui_framework/View.h"
 #include <functional>
 
-class Chat_view : public Gui::Fullscreen_view
+class Chat_view : public Gui::View
 {
 public:
     Chat_view();
@@ -23,9 +24,11 @@ public:
     }
 
 private:
+    void create_windows();
     void on_send_button_pressed();
 
-    std::shared_ptr<Gui::Child_window> m_chat_window = nullptr;
+    std::shared_ptr<Gui::Window> m_chat_window = nullptr;
+    std::shared_ptr<Gui::Window> m_input_window = nullptr;
     std::shared_ptr<Gui::Input_text<60>> m_chat_input = nullptr;
     std::shared_ptr<Gui::Button> m_send_button = nullptr;
 

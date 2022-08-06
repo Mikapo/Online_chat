@@ -167,6 +167,7 @@
     <ClInclude Include="Vendor\ImGui\imstb_textedit.h" />
     <ClInclude Include="Vendor\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source\UI\Gui_framework\Fullscreen_view.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Window_changes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\UI\Gui_framework\Elements\Parents\Child_window.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Vendor\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Vendor\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source\UI\Gui_framework\Fullscreen_view.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Window_changes.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

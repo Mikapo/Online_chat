@@ -6,6 +6,7 @@ Gui::Fullscreen_view::Fullscreen_view(std::string_view window_name)
     m_window = create_window(window_name);
     m_window->add_flag(ImGuiWindowFlags_::ImGuiWindowFlags_NoDecoration);
     m_window->add_flag(ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
+    m_window->add_flag(ImGuiWindowFlags_::ImGuiWindowFlags_NoBringToFrontOnFocus);
 }
 
 void Gui::Fullscreen_view::update()

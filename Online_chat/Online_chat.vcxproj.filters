@@ -111,6 +111,9 @@
     <ClInclude Include="Source\UI\Color_themes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\UI\Gui_framework\Window_changes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\UI\Gui_framework\Common.cpp">
@@ -189,6 +192,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\UI\Gui_framework\Elements\Parents\Child_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\Gui_framework\Window_changes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
