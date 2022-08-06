@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6a3586b4-0e80-47ac-8593-49f6c6fd9734}</ProjectGuid>
+    <RootNamespace>Onlinechat</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\asio-1.22.2\include;$(SolutionDir)Libraries\GLFW\include;$(ProjectDir)Vendor;$(SolutionDir)/Online_chat_common/Source;$(ProjectDir)Source</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\GLFW\lib-vc2019</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\asio-1.22.2\include;$(SolutionDir)Libraries\GLFW\include;$(ProjectDir)Vendor;$(SolutionDir)/Online_chat_common/Source;$(ProjectDir)Source</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libraries\GLFW\lib-vc2019</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Parents\Child_window.h" />
+    <ClInclude Include="Source\UI\Chat_view.h" />
+    <ClInclude Include="Source\UI\Connect_view.h" />
+    <ClInclude Include="Source\Core\Application.h" />
+    <ClInclude Include="Source\Core\Chat_client.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Add_event_macro.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Common.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Button.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Checkbox.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Combo.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Dummy.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Element.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Input_text.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Parents\Parent.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Parents\Window.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Slider.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Elements\Text.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Gui_framework.h" />
+    <ClInclude Include="Source\UI\Gui_framework\View.h" />
+    <ClInclude Include="Source\Core\Key.h" />
+    <ClInclude Include="Source\UI\Color_themes.h" />
+    <ClInclude Include="Source\UI\Ui_controller.h" />
+    <ClInclude Include="Vendor\ImGui\imconfig.h" />
+    <ClInclude Include="Vendor\ImGui\imgui.h" />
+    <ClInclude Include="Vendor\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="Vendor\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Vendor\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Vendor\ImGui\imgui_internal.h" />
+    <ClInclude Include="Vendor\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Vendor\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Vendor\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\UI\Gui_framework\Fullscreen_view.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Parents\Child_window.cpp" />
+    <ClCompile Include="Source\UI\Chat_view.cpp" />
+    <ClCompile Include="Source\UI\Connect_view.cpp" />
+    <ClCompile Include="Source\Core\Application.cpp" />
+    <ClCompile Include="Source\Core\Chat_client.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Common.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Button.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Checkbox.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Combo.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Dummy.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Element.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Parents\Parent.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Parents\Window.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Slider.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Elements\Text.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\View.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\UI\Ui_controller.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Vendor\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\UI\Gui_framework\Fullscreen_view.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

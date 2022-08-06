@@ -1,0 +1,21 @@
+Checks: 'bugprone*,
+		clang-analyzer*,
+		cert*,
+		concurrency*,
+		cppcore*,
+		misc*,
+		modernize*,
+		performance*,
+		readability*,
+        google*,
+        hicpp*,
+        llvm*,
+		-*clang-diagnostic-unused-command-line-argument,
+		-*llvmlibc-callee-namespace,
+		-*llvmlibc-implementation-in-namespace,
+		-*llvmlibc-restrict-system-libc-headers,
+		-*modernize-use-trailing-return-type,
+        -*-braces-around-statements'
+		
+FormatStyle:     file
+
