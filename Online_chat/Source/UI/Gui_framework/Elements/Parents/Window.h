@@ -9,7 +9,7 @@ namespace Gui
     class Window : public Parent
     {
     public:
-        Window(std::string_view name) : Parent(name)
+        Window(std::string_view name, int32_t order_id = -1) : Parent(name, order_id)
         {
         }
 

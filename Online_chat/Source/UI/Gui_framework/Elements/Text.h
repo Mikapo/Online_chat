@@ -17,7 +17,7 @@ namespace Gui
     class Text : public Element
     {
     public:
-        Text(std::string_view name) : Element(name)
+        Text(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

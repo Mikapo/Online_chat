@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Application.h"
+#include "Key.h"
 #include "Message_id.h"
 #include "Networking/Net_framework.h"
 #include "UI/Ui_controller.h"
 #include <thread>
 
+struct Lobby_data;
 class Chat_client : private Net::Client_interface<Message_id>
 {
 public:
@@ -22,7 +24,9 @@ private:
     void cleanup();
     void on_connect(std::string_view username, std::string_view ip, std::string_view port);
     void send_username();
+    void on_input(Input_key key, Input_action action);
     void on_send_message(std::string_view message);
+    void handle_lobby_information(const Lobby_data& lobby_data);
 
     Application m_application;
     Ui_controller m_ui_controller;

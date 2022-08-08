@@ -81,6 +81,9 @@ void Chat_server::handle_client_set_name(
     const uint32_t id = client.get_id();
     m_names[id] = name;
 
-    auto net_message = Net_message_converter::packade_server_client_join(id, name);
-    send_message_to_all_clients(net_message);
+    auto join_net_message = Net_message_converter::packade_server_client_join(id, name);
+    send_message_to_all_clients(join_net_message, client);
+
+    auto lobby_information_net_message = Net_message_converter::packade_server_lobby_information(m_names);
+    send_message_to_client(client, lobby_information_net_message);
 }

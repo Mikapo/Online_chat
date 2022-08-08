@@ -8,7 +8,7 @@ namespace Gui
     class Button : public Element
     {
     public:
-        Button(std::string_view name) : Element(name)
+        Button(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

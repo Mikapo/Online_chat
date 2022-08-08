@@ -11,7 +11,7 @@ namespace Gui
     class Combo : public Element
     {
     public:
-        Combo(std::string_view name) : Element(name)
+        Combo(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

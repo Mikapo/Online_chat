@@ -57,5 +57,6 @@ enum class Input_key : int32_t
     W = GLFW_KEY_W,
     X = GLFW_KEY_X,
     Y = GLFW_KEY_Y,
-    Z = GLFW_KEY_Z
+    Z = GLFW_KEY_Z,
+    enter = GLFW_KEY_ENTER
 };

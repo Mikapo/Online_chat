@@ -9,7 +9,7 @@ namespace Gui
     class Dummy : public Element
     {
     public:
-        Dummy(std::string_view name) : Element(name)
+        Dummy(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

@@ -2,6 +2,13 @@
 
 #include "Message_id.h"
 #include "Networking/Utility/Net_message.h"
+#include <unordered_map>
+
+struct Client_data
+{
+    uint32_t m_client_id = 0;
+    std::string m_client_name = "";
+};
 
 struct Server_message_data
 {
@@ -10,15 +17,57 @@ struct Server_message_data
     std::string m_message = "";
 };
 
-struct Client_data
+struct Lobby_data
 {
-    uint32_t m_client_id = 0;
-    std::string m_client_name = "";
+    std::vector<Client_data> m_clients;
 };
 
 class Net_message_converter
 {
 public:
+    static Net::Net_message<Message_id> packade_server_lobby_information(
+        const std::unordered_map<uint32_t, std::string>& clients)
+    {
+        Net::Net_message<Message_id> net_message;
+        net_message.set_id(Message_id::server_lobby_information);
+
+        for (const auto& client : clients)
+        {
+            net_message.push_back_from_container(client.second.begin(), client.second.end());
+            net_message << static_cast<uint64_t>(client.second.size());
+            net_message << client.first;
+        }
+
+        net_message << static_cast<uint64_t>(clients.size());
+
+        return net_message;
+    }
+
+    static Lobby_data extract_server_lobby_information(Net::Net_message<Message_id>& in_net_message)
+    {
+        if (in_net_message.get_id() != Message_id::server_lobby_information)
+            throw std::runtime_error("Wrong type of message");
+
+        uint64_t size = 0;
+        in_net_message >> size;
+
+        Lobby_data output;
+        output.m_clients.reserve(size);
+
+        for (uint64_t i = 0; i < size; ++i)
+        {
+            auto& current = output.m_clients.emplace_back();
+            in_net_message >> current.m_client_id;
+
+            uint64_t name_size;
+            in_net_message >> name_size;
+
+            current.m_client_name = in_net_message.extract_as_string(name_size);
+        }
+
+        return output;
+    }
+
     static Net::Net_message<Message_id> packade_server_client_left(
         uint32_t client_id, std::string_view client_name = "Client")
     {

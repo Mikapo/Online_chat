@@ -7,7 +7,7 @@ namespace Gui
     class Checkbox : public Element
     {
     public:
-        Checkbox(std::string_view name) : Element(name)
+        Checkbox(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

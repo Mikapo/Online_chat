@@ -19,6 +19,10 @@ public:
     void set_state(Ui_state new_state);
     void add_chat_message(std::string_view message, std::string_view sender);
     void add_chat_notification(std::string_view notification);
+    void on_enter_pressed();
+    void on_client_connect(std::string_view name, uint32_t id);
+    void on_client_disconnect(std::string_view name, uint32_t id);
+    void clear_chat();
 
     template <typename Func_type>
     void set_on_connect_callback(const Func_type& func)

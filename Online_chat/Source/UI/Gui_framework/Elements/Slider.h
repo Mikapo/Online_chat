@@ -18,7 +18,7 @@ namespace Gui
     class Slider : public Element
     {
     public:
-        Slider(std::string_view name) : Element(name)
+        Slider(std::string_view name, int32_t order_id = -1) : Element(name, order_id)
         {
         }
 

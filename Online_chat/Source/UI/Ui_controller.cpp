@@ -51,3 +51,24 @@ void Ui_controller::add_chat_notification(std::string_view notification)
 {
     m_chat_view.add_notification(notification);
 }
+
+void Ui_controller::on_enter_pressed()
+{
+    if (m_state == Ui_state::chat)
+        m_chat_view.on_enter_pressed();
+}
+
+void Ui_controller::on_client_connect(std::string_view name, uint32_t id)
+{
+    m_chat_view.on_client_connect(name, id);
+}
+
+void Ui_controller::on_client_disconnect(std::string_view name, uint32_t id)
+{
+    m_chat_view.on_client_disconnect(name, id);
+}
+
+void Ui_controller::clear_chat()
+{
+    m_chat_view.clear_chat();
+}

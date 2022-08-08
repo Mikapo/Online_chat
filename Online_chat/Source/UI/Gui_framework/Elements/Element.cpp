@@ -20,6 +20,9 @@ void Gui::Element::draw()
         ImGui::SameLine(m_same_line_offset, m_same_line_spacing);
 
     draw_element();
+
+    m_is_focused = ImGui::IsItemFocused();
+
     ImGui::PopStyleColor(m_colors.size());
     ImGui::PopID();
 
@@ -44,6 +47,16 @@ void Gui::Element::add_style(ImGuiStyleVar type, ImGuiStyle style)
     std::scoped_lock lock(m_mutex);
 
     m_styles[type] = style;
+}
+
+bool Gui::Element::is_focused() const noexcept
+{
+    return m_is_focused;
+}
+
+int32_t Gui::Element::get_order_id() const noexcept
+{
+    return m_order_id;
 }
 
 void Gui::Element::set_id(int32_t new_id) noexcept
