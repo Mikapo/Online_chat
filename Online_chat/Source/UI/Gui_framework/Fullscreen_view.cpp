@@ -14,7 +14,7 @@ void Gui::Fullscreen_view::update()
     View::update();
 
     float width = 0.0f, height = 0.0f;
-    Gui::get_display_size(width, height);
+    Gui::Common::get_display_size(width, height);
 
     m_window->set_window_size(width, height);
     m_window->set_window_pos(0, 0);

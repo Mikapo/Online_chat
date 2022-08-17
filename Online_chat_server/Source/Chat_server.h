@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Message_id.h"
+#include "Net_message_converter.h"
 #include "Networking/Net_framework.h"
 #include <cstdint>
 #include <unordered_map>
@@ -18,8 +19,8 @@ private:
     void on_client_disconnect(uint32_t id, std::string_view ip) override;
     void handle_client_message(
         Net::Client_connection_interface<Message_id> client, Net::Net_message<Message_id> message);
-    void handle_client_set_name(
+    void handle_client_information(
         Net::Client_connection_interface<Message_id> client, Net::Net_message<Message_id> message);
 
-    std::unordered_map<uint32_t, std::string> m_names;
+    std::unordered_map<uint32_t, Client_data> m_clients;
 };

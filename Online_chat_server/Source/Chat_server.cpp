@@ -1,11 +1,10 @@
 #include "Chat_server.h"
-#include "Net_message_converter.h"
 #include <iostream>
 
 Chat_server::Chat_server(uint16_t port) : Net::Server_interface<Message_id>(port)
 {
     add_accepted_message(Message_id::client_message);
-    add_accepted_message(Message_id::client_set_name);
+    add_accepted_message(Message_id::client_information);
 }
 
 void Chat_server::start()
@@ -29,8 +28,8 @@ void Chat_server::on_message(Net::Client_connection_interface<Message_id> client
         handle_client_message(client, std::move(message));
         break;
 
-    case Message_id::client_set_name:
-        handle_client_set_name(client, std::move(message));
+    case Message_id::client_information:
+        handle_client_information(client, std::move(message));
         break;
 
     default:
@@ -41,49 +40,47 @@ void Chat_server::on_message(Net::Client_connection_interface<Message_id> client
 
 void Chat_server::on_client_disconnect(uint32_t id, std::string_view ip)
 {
-    auto found_name = m_names.find(id);
+    auto found_client = m_clients.find(id);
 
-    std::string name = "Client";
-
-    if (found_name != m_names.end())
+    if (found_client != m_clients.end())
     {
-        name = found_name->second;
-        m_names.erase(found_name);
+        auto net_message = Net_message_converter::packade_server_client_left(found_client->second);
+        send_message_to_all_clients(net_message);
+        m_clients.erase(found_client);
     }
-
-    auto net_message = Net_message_converter::packade_server_client_left(id, name);
-    send_message_to_all_clients(net_message);
 }
 
 void Chat_server::handle_client_message(
     Net::Client_connection_interface<Message_id> client, Net::Net_message<Message_id> message)
 {
-    std::string name = "Client";
+    auto found_client = m_clients.find(client.get_id());
 
-    auto found_name = m_names.find(client.get_id());
+    if (found_client == m_clients.end())
+    {
+        client.disconnect();
+        return;
+    }
 
-    if (found_name != m_names.end())
-        name = found_name->second;
+    Server_message_data message_data;
+    message_data.m_message = Net_message_converter::extract_client_message(message);
+    message_data.m_sender_id = found_client->second.m_id;
+    message_data.m_sender_name = found_client->second.m_name;
+    message_data.m_sender_color = found_client->second.m_color;
+    message_data.m_send_time = std::chrono::utc_clock::now();
 
-    const std::string chat_message = Net_message_converter::extract_client_message(message);
-
-    std::cout << chat_message << "\n";
-
-    auto server_message = Net_message_converter::package_server_message(chat_message, client.get_id(), name);
-
+    auto server_message = Net_message_converter::package_server_message(message_data);
     send_message_to_all_clients(server_message);
 }
 
-void Chat_server::handle_client_set_name(
+void Chat_server::handle_client_information(
     Net::Client_connection_interface<Message_id> client, Net::Net_message<Message_id> message)
 {
-    const std::string name = Net_message_converter::extract_client_set_name(message);
-    const uint32_t id = client.get_id();
-    m_names[id] = name;
+    const Client_data client_data = Net_message_converter::extract_client_information(message, client.get_id());
+    m_clients[client_data.m_id] = client_data;
 
-    auto join_net_message = Net_message_converter::packade_server_client_join(id, name);
+    auto join_net_message = Net_message_converter::packade_server_client_join(client_data);
     send_message_to_all_clients(join_net_message, client);
 
-    auto lobby_information_net_message = Net_message_converter::packade_server_lobby_information(m_names);
+    auto lobby_information_net_message = Net_message_converter::packade_server_lobby_information(m_clients);
     send_message_to_client(client, lobby_information_net_message);
 }

@@ -16,10 +16,12 @@ public:
     void correct_size();
     void update() override;
     void add_notification(std::string_view notification);
-    void add_client_message(std::string_view message, std::string_view sender);
+    void add_client_message(
+        std::string_view message, std::string_view sender_name, const std::array<float, 4>& sender_color,
+        uint32_t sender_id, std::string_view send_time);
     void on_enter_pressed();
-    void on_client_connect(std::string_view name, uint32_t id);
-    void on_client_disconnect(std::string_view name, uint32_t id);
+    void on_client_connect(std::string_view name, const std::array<float, 4>& client_color, uint32_t id);
+    void on_client_disconnect(std::string_view name, const std::array<float, 4>& client_color, uint32_t id);
     void clear_chat();
 
     template <typename Func_name>
@@ -40,4 +42,6 @@ private:
     std::unordered_map<uint32_t, std::shared_ptr<Gui::Text>> m_client_texts;
 
     std::function<void(std::string_view)> m_on_send;
+
+    uint32_t m_latest_sender_id = 0;
 };

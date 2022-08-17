@@ -1,6 +1,7 @@
 #include "Chat_view.h"
 #include "Color_themes.h"
 #include "Gui_framework/Common.h"
+#include "Gui_framework/Elements/Dummy.h"
 
 Chat_view::Chat_view()
 {
@@ -17,7 +18,7 @@ Chat_view::Chat_view()
 void Chat_view::correct_size()
 {
     float width = 0, height = 0;
-    Gui::get_display_size(width, height);
+    Gui::Common::get_display_size(width, height);
 
     constexpr float input_window_size = 55.0f;
     constexpr float client_window_size = 300.0f;
@@ -54,7 +55,7 @@ void Chat_view::create_windows()
     m_input_window->add_color(ImGuiCol_::ImGuiCol_FrameBg, Color_themes::text_frame);
     m_input_window->add_color(ImGuiCol_::ImGuiCol_Button, Color_themes::button);
 
-    m_clients_window = create_window("Client");
+    m_clients_window = create_window("Clients");
 
     m_clients_window->add_flag(ImGuiWindowFlags_::ImGuiWindowFlags_NoMove);
     m_clients_window->add_flag(ImGuiWindowFlags_::ImGuiWindowFlags_NoDecoration);
@@ -62,8 +63,12 @@ void Chat_view::create_windows()
 
     m_clients_window->add_color(ImGuiCol_::ImGuiCol_WindowBg, Color_themes::background);
 
-    auto text = m_clients_window->add_children<Gui::Text>("Clients_text");
-    text->set_text("Users");
+    auto text = m_clients_window->add_children<Gui::Text>("Clients text");
+    text->set_text("Clients:");
+    text->set_font(1);
+
+    auto clients_dummy = m_clients_window->add_children<Gui::Dummy>("Clients dummy");
+    clients_dummy->set_size(1.0f, 5.0f);
 }
 
 void Chat_view::update()
@@ -79,12 +84,33 @@ void Chat_view::add_notification(std::string_view notification)
     text->set_text(notification);
 }
 
-void Chat_view::add_client_message(std::string_view message, std::string_view sender)
+void Chat_view::add_client_message(
+    std::string_view message, std::string_view sender_name, const std::array<float, 4>& sender_color,
+    uint32_t sender_id, std::string_view send_time)
 {
-    const std::string formated_message = std::format("[{}] {}", sender, message);
-    auto text = m_chat_window->add_children<Gui::Text>("Message");
-    text->set_text(formated_message);
-    text->set_text_type(Gui::Text_type::wrapped);
+    if (m_latest_sender_id != sender_id)
+    {
+        auto dummy = m_chat_window->add_children<Gui::Dummy>("Chat dummy");
+        dummy->set_size(1.0f, 10.0f);
+
+        auto sender_text = m_chat_window->add_children<Gui::Text>("Sender name");
+        sender_text->set_text(sender_name);
+        sender_text->add_color(
+            ImGuiCol_::ImGuiCol_Text, {sender_color.at(0), sender_color.at(1), sender_color.at(2), sender_color.at(3)});
+        sender_text->set_font(1);
+
+        auto time_text = m_chat_window->add_children<Gui::Text>("Time");
+        time_text->set_text(send_time);
+        time_text->set_on_same_line(true, 0.0f, 10.0f);
+        time_text->set_font(2);
+
+        m_latest_sender_id = sender_id;
+    }
+
+    auto message_text = m_chat_window->add_children<Gui::Text>("Message");
+    message_text->set_text(message);
+    message_text->set_text_type(Gui::Text_type::wrapped);
+
     m_chat_window->set_scroll_y_ratio(1.0f);
 }
 
@@ -94,14 +120,16 @@ void Chat_view::on_enter_pressed()
         on_send_button_pressed();
 }
 
-void Chat_view::on_client_connect(std::string_view name, uint32_t id)
+void Chat_view::on_client_connect(std::string_view name, const std::array<float, 4>& client_color, uint32_t id)
 {
     auto client_text = m_clients_window->add_children<Gui::Text>(name);
+    client_text->add_color(
+        ImGuiCol_::ImGuiCol_Text, {client_color.at(0), client_color.at(1), client_color.at(2), client_color.at(3)});
     client_text->set_text(name);
     m_client_texts.emplace(id, client_text);
 }
 
-void Chat_view::on_client_disconnect(std::string_view name, uint32_t id)
+void Chat_view::on_client_disconnect(std::string_view name, const std::array<float, 4>& client_color, uint32_t id)
 {
     auto client_text = m_client_texts.at(id);
     m_clients_window->remove_child(client_text->get_order_id());

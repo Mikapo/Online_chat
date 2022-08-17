@@ -14,20 +14,22 @@ Connect_view::Connect_view() : Fullscreen_view("Connect_window")
     window->add_children<Gui::Dummy>("Username_dummy");
     m_name_input = window->add_children<Gui::Input_text<30>>("Username");
 
-    auto between_dummy = window->add_children<Gui::Dummy>("Between dummy");
-    between_dummy->set_size(0.0f, 10.0f);
+    create_between_dummy(window);
+
+    window->add_children<Gui::Dummy>("Color_dummy");
+    m_color = window->add_children<Gui::Color_edit>("Color");
+
+    create_between_dummy(window);
 
     window->add_children<Gui::Dummy>("Ip_dummy");
-    m_ip_input = window->add_children<Gui::Input_text<14>>("IP");
+    m_ip_input = window->add_children<Gui::Input_text<30>>("IP");
 
-    between_dummy = window->add_children<Gui::Dummy>("Between dummy");
-    between_dummy->set_size(0.0f, 10.0f);
+    create_between_dummy(window);
 
     window->add_children<Gui::Dummy>("port_dummy");
     m_port_input = window->add_children<Gui::Input_text<20>>("Port");
 
-    between_dummy = window->add_children<Gui::Dummy>("Between dummy");
-    between_dummy->set_size(0.0f, 10.0f);
+    create_between_dummy(window);
 
     window->add_children<Gui::Dummy>("connect_dummy");
     m_connect_button = window->add_children<Gui::Button>("Connect");
@@ -44,23 +46,15 @@ void Connect_view::update()
 void Connect_view::correct_size()
 {
     float width = 0.0f, height = 0.0f;
-    Gui::get_display_size(width, height);
+    Gui::Common::get_display_size(width, height);
 
     m_top_dummy->set_size(0, height * 0.30f);
 
-    const float padding = width * 0.25f;
-    const float size = width * 0.50f;
-
-    m_name_input->set_on_same_line(true, padding);
-    m_name_input->set_width(size);
-
-    m_ip_input->set_on_same_line(true, padding);
-    m_ip_input->set_width(size);
-
-    m_port_input->set_on_same_line(true, padding);
-    m_port_input->set_width(size);
-
-    m_connect_button->set_on_same_line(true, padding);
+    resize_element(m_name_input);
+    resize_element(m_color);
+    resize_element(m_ip_input);
+    resize_element(m_port_input);
+    resize_element(m_connect_button);
 
     ImGui::GetIO().FontGlobalScale = 2.5f;
 }
@@ -68,9 +62,28 @@ void Connect_view::correct_size()
 void Connect_view::on_connect_button_pressed()
 {
     const std::string_view username = m_name_input->get_text();
+    const std::array<float, 4>& color = m_color->get_color();
     const std::string_view ip = m_ip_input->get_text();
     const std::string_view port = m_port_input->get_text();
 
     if (m_on_connect_pressed)
-        m_on_connect_pressed(username, ip, port);
+        m_on_connect_pressed(username, color, ip, port);
+}
+
+void Connect_view::create_between_dummy(std::shared_ptr<Gui::Window> window)
+{
+    auto between_dummy = window->add_children<Gui::Dummy>("Between dummy");
+    between_dummy->set_size(0.0f, 10.0f);
+}
+
+void Connect_view::resize_element(std::shared_ptr<Gui::Element> element)
+{
+    float width = 0.0f, height = 0.0f;
+    Gui::Common::get_display_size(width, height);
+
+    const float padding = width * 0.25f;
+    const float size = width * 0.50f;
+
+    element->set_on_same_line(true, padding);
+    element->set_width(size);
 }

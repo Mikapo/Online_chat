@@ -24,17 +24,21 @@ namespace Gui
         void set_width(float new_width);
         void add_color(ImGuiCol type, ImVec4 color);
         void add_style(ImGuiStyleVar type, ImGuiStyle style);
+        void set_font(int32_t font_id) noexcept;
         virtual void update() = 0;
 
     protected:
         [[nodiscard]] std::string_view get_name() const noexcept;
 
     private:
+        void push_changes();
+        void pop_changes();
         virtual void draw_element() = 0;
 
         std::string m_name = "";
         int32_t m_id = 0;
         int32_t m_order_id = -1;
+        int32_t m_font_id = 0;
         bool m_same_line = false;
         float m_same_line_offset = 0.0f, m_same_line_spacing = -1.0f;
         float m_width = -1;
@@ -43,6 +47,8 @@ namespace Gui
         std::unordered_map<ImGuiStyleVar, ImGuiStyle> m_styles;
 
         bool m_is_focused = false;
+        bool m_did_push_width = false;
+        bool m_did_push_font = false;
 
         std::mutex m_mutex;
     };
